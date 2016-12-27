@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="5dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:background="@android:color/white"
+    android:paddingTop="5dp"
     tools:context="csnowstack.load.MainActivity">
 
 
@@ -17,10 +18,14 @@
         android:id="@+id/pull_load_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcv"
-            android:overScrollMode="never"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"/>
     </csnowstack.load.view.PullLeftLoadMoreLayout>
-</FrameLayout>
+
+
+
+</LinearLayout>

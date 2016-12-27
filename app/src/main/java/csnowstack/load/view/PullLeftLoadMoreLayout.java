@@ -27,6 +27,10 @@ public class PullLeftLoadMoreLayout extends CoordinatorLayout {
     public PullLeftLoadMoreLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext=context;
+        if(getChildCount()>1){
+            throw new RuntimeException("PullLeftLoadMoreLayout can host only one direct child");
+        }
+
     }
 
 
