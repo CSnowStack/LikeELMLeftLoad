@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--item里面图片的大小,跟随着滑动变化的自定义view的大小一样-->
+    <dimen name="item_img">70dp</dimen>
+</resources>
