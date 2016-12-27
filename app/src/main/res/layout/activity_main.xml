@@ -6,41 +6,21 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:background="@android:color/white"
     tools:context="csnowstack.load.MainActivity">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@android:color/white"
+
+    <csnowstack.load.PullLeftLoadMoreLayout
+        android:id="@+id/pull_load_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <View
-            app:layout_behavior="csnowstack.load.BeDependentBehavior"
-            android:id="@+id/view"
-            android:layout_width="1dp"
-            android:layout_height="1dp"/>
         <android.support.v7.widget.RecyclerView
-            app:layout_behavior="csnowstack.load.RcvBehavior"
             android:id="@+id/rcv"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <csnowstack.load.LoadingView
-            app:layout_behavior="csnowstack.load.LoadingBehavior"
-            android:id="@+id/loading"
-            android:layout_width="@dimen/item_img"
-            android:layout_height="@dimen/item_img"/>
-
-        <TextView
-            android:gravity="center"
-            android:textSize="10sp"
-            android:textColor="@android:color/white"
-            app:layout_behavior="csnowstack.load.TxtBehavior"
-            android:ems="1"
-            android:text="@string/txt_normal"
-            android:id="@+id/txt"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/item_img"/>
-    </android.support.design.widget.CoordinatorLayout>
+    </csnowstack.load.PullLeftLoadMoreLayout>
 </FrameLayout>

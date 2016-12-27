@@ -1,33 +1,27 @@
 package csnowstack.load;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private LoadingView mLoadingView;
+    private PullLeftLoadMoreLayout mPullLeftLoadMoreLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLoadingView= (LoadingView) findViewById(R.id.loading);
         mRecyclerView= (RecyclerView) findViewById(R.id.rcv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         mRecyclerView.setAdapter(new ELMAdapter());
 
+        mPullLeftLoadMoreLayout= (PullLeftLoadMoreLayout) findViewById(R.id.pull_load_layout);
+        mPullLeftLoadMoreLayout.addView(getResources().getDimensionPixelOffset(R.dimen.item_img));
 
-        mLoadingView.setListener(new LoadingView.OnNoticeGoListener() {
-            @Override
-            public void go() {
-                Toast.makeText(MainActivity.this,"跳转界面",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 

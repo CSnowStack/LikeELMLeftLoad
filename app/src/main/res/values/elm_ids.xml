@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ele_txt" type="id"/>
+    <item name="ele_loading" type="id"/>
+    <item name="ele_be_dependent" type="id"/>
+</resources>

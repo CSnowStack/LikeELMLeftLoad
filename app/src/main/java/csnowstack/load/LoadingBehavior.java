@@ -1,8 +1,6 @@
 package csnowstack.load;
 
-import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
-import android.util.AttributeSet;
 import android.view.View;
 
 /**
@@ -10,32 +8,38 @@ import android.view.View;
  */
 
 public class LoadingBehavior extends CoordinatorLayout.Behavior {
-    private int mParentDistanceMax;
-    public LoadingBehavior() {
+
+
+
+    private int mHeight;
+
+    public LoadingBehavior(int height) {
+        mHeight = height;
     }
 
-    public LoadingBehavior(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mParentDistanceMax=context.getResources().getDimensionPixelOffset(R.dimen.item_img);
+    @Override
+    public boolean onMeasureChild(CoordinatorLayout parent, View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
+        child.measure(View.MeasureSpec.makeMeasureSpec(mHeight, View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(mHeight, View.MeasureSpec.EXACTLY));
+        return true;
     }
 
     //移动到右边
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
         parent.onLayoutChild(child,layoutDirection);
-        child.offsetLeftAndRight(parent.getWidth()-child.getWidth());
+        child.offsetLeftAndRight(parent.getWidth()-child.getWidth());//移动到屏幕外
         return true;
     }
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        return dependency.getId()==R.id.view;
+        return dependency.getId()==R.id.ele_be_dependent;
     }
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         //列表移动的比例
-        float fraction=Math.abs(dependency.getTranslationX())/mParentDistanceMax;
+        float fraction=Math.abs(dependency.getTranslationX())/mHeight;
         //改变view
         ((LoadingView)child).setFraction(fraction,dependency.getTranslationX()/2);
         return true;

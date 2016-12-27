@@ -1,5 +1,7 @@
 package csnowstack.load;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
@@ -17,16 +19,41 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     private RecyclerView mRecyclerView;
     private int mDistanceMax;
     private ValueAnimator mValueAnimator;
-    public BeDependentBehavior() {
+    private float mDistance=0;
+    private boolean mInAnimator=false;
+
+    public BeDependentBehavior(Context context) {
+       this(context,null);
     }
+
 
     public BeDependentBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         mDistanceMax=context.getResources().getDimensionPixelOffset(R.dimen.item_img);
         mValueAnimator=ValueAnimator.ofFloat(0,1);
         mValueAnimator.setDuration(500);
+        mValueAnimator.addListener(new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                mInAnimator=true;
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mInAnimator=false;
+                mDistance=0;
+                mValueAnimator.removeAllUpdateListeners();
+            }
+        });
 
     }
+
+
+
+
 
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
@@ -35,23 +62,26 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
         return true;
     }
 
-    //水平方向,且列表不需要滑动
+    //水平方向
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_HORIZONTAL) != 0;
+        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_HORIZONTAL) != 0 && !mInAnimator;
     }
 
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
+
         if (dx>0&&!childRequestScroll() || dx<0&&child.getTranslationX()<0){ //向左滑动且列表不需要移动,向右滑且没在初始位置
             consumed[0]=dx;//全部消耗掉
-            if(child.getTranslationX()-dx<=-mDistanceMax){
-                dx=-mDistanceMax;
+            float distance =dx/2f;
+
+            if(mDistance-distance<=-mDistanceMax){
+                mDistance=-mDistanceMax;
             }else {
-                dx= (int) (child.getTranslationX()-dx);
+                mDistance=mDistance-distance;
             }
-            child.setTranslationX(dx);
+            child.setTranslationX(mDistance);
 
         }else {
             consumed[0]=0;//全部分配给列表
@@ -61,8 +91,10 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     @Override
     public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target) {
         super.onStopNestedScroll(coordinatorLayout, child, target);
-        reset(child);
-        ((TxtBehavior) ((CoordinatorLayout.LayoutParams) coordinatorLayout.findViewById(R.id.txt).getLayoutParams()).getBehavior()).onStopNestedScroll();
+        if(child.getTranslationX()!=0){
+            reset(child);
+            ((TxtBehavior) ((CoordinatorLayout.LayoutParams) coordinatorLayout.findViewById(R.id.ele_txt).getLayoutParams()).getBehavior()).onStopNestedScroll();
+        }
     }
 
     //不给fling
@@ -73,13 +105,14 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
 
     private void reset(final View child) {
         final float translationX=child.getTranslationX();
-        mValueAnimator.removeAllUpdateListeners();
+
         mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 child.setTranslationX((1-animation.getAnimatedFraction())*translationX);
             }
         });
+
         mValueAnimator.start();
 
     }

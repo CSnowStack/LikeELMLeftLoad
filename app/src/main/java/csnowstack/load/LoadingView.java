@@ -21,7 +21,7 @@ public class LoadingView extends View {
     private OnNoticeGoListener mListener;
 
     public LoadingView(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public LoadingView(Context context, @Nullable AttributeSet attrs) {
