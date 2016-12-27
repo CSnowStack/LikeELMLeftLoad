@@ -1,12 +1,15 @@
-package csnowstack.load;
+package csnowstack.load.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import csnowstack.load.R;
 
 /**
  * Created by cq on 2016/12/27.
@@ -28,7 +31,7 @@ public class PullLeftLoadMoreLayout extends CoordinatorLayout {
 
 
 
-   public void addView(int imgHeight){
+   public void addView(int loadingHeight){
        LayoutParams layoutParamsBeDependent=new LayoutParams(1, 1);
        layoutParamsBeDependent.setBehavior(new BeDependentBehavior(mContext));
        mBeDependent =new View(mContext);
@@ -37,17 +40,16 @@ public class PullLeftLoadMoreLayout extends CoordinatorLayout {
 
 
        LayoutParams layoutParamsLoading=new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-       layoutParamsLoading.setBehavior(new LoadingBehavior(imgHeight));
+       layoutParamsLoading.setBehavior(new LoadingBehavior(loadingHeight));
        mLoadingView=new LoadingView(mContext);
        mLoadingView.setId(R.id.ele_loading);
        addView(mLoadingView,layoutParamsLoading);
 
        LayoutParams layoutParams=new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
        layoutParams.setBehavior(new TxtBehavior(mContext));
-       mTxt=new TextView(mContext,null);
+       mTxt=new TextView(mContext);
        mTxt.setEms(1);
        mTxt.setTextColor(Color.WHITE);
-       mTxt.setText("查看更多");
        mTxt.setTextSize(10);
        mTxt.setId(R.id.ele_txt);
        addView(mTxt,layoutParams);
@@ -58,5 +60,12 @@ public class PullLeftLoadMoreLayout extends CoordinatorLayout {
 
 
 
+   public void setOnGoListener(LoadingView.OnNoticeGoListener onGoListener){
+       mLoadingView.setListener(onGoListener);
+   }
 
+
+   public void setFillLoadingColor(@ColorInt int color){
+       mLoadingView.setColor(color);
+   }
 }

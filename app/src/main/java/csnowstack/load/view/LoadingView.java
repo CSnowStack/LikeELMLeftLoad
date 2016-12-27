@@ -1,13 +1,16 @@
-package csnowstack.load;
+package csnowstack.load.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
+import csnowstack.load.R;
 
 /**
  * Created by cqll on 2016/12/22.
@@ -85,6 +88,11 @@ public class LoadingView extends View {
         if(mListener!=null)
             mListener.go();
     }
+
+    public void setColor(@ColorInt int color) {
+        mPaint.setColor(color);
+    }
+
 
     public static interface  OnNoticeGoListener{
         void  go();

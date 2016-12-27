@@ -13,14 +13,14 @@
     tools:context="csnowstack.load.MainActivity">
 
 
-    <csnowstack.load.PullLeftLoadMoreLayout
+    <csnowstack.load.view.PullLeftLoadMoreLayout
         android:id="@+id/pull_load_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcv"
             android:overScrollMode="never"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-    </csnowstack.load.PullLeftLoadMoreLayout>
+    </csnowstack.load.view.PullLeftLoadMoreLayout>
 </FrameLayout>

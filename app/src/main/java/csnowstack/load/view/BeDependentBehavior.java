@@ -1,4 +1,4 @@
-package csnowstack.load;
+package csnowstack.load.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -6,17 +6,17 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import csnowstack.load.R;
 
 /**
  * Created by cqll on 2016/12/22.
  */
 
 public class BeDependentBehavior extends CoordinatorLayout.Behavior {
-    private RecyclerView mRecyclerView;
+    private View mList;
     private int mDistanceMax;
     private ValueAnimator mValueAnimator;
     private float mDistance=0;
@@ -58,7 +58,7 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
         parent.onLayoutChild(child, layoutDirection);
-        mRecyclerView = (RecyclerView) parent.findViewById(R.id.rcv);
+        mList =  parent.getChildAt(0);
         return true;
     }
 
@@ -71,8 +71,8 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
-
-        if (dx>0&&!childRequestScroll() || dx<0&&child.getTranslationX()<0){ //向左滑动且列表不需要移动,向右滑且没在初始位置
+        //list占满屏幕,向左滑动，但list不能左滑
+        if (mList.getWidth()==coordinatorLayout.getWidth() && dx>0&& !ViewCompat.canScrollHorizontally(mList,ViewCompat.SCROLL_INDICATOR_LEFT) || dx<0&&child.getTranslationX()<0){
             consumed[0]=dx;//全部消耗掉
             float distance =dx/2f;
 
@@ -91,6 +91,7 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     @Override
     public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target) {
         super.onStopNestedScroll(coordinatorLayout, child, target);
+
         if(child.getTranslationX()!=0){
             reset(child);
             ((TxtBehavior) ((CoordinatorLayout.LayoutParams) coordinatorLayout.findViewById(R.id.ele_txt).getLayoutParams()).getBehavior()).onStopNestedScroll();
@@ -117,10 +118,4 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
 
     }
 
-    private boolean childRequestScroll() {
-        return mRecyclerView.getAdapter() != null && //有适配器
-                mRecyclerView.getAdapter().getItemCount() > 0 &&//item大于0
-                //最后一不完全可见
-                ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition() != mRecyclerView.getAdapter().getItemCount()-1;
-    }
 }

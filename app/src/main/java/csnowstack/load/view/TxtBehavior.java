@@ -1,10 +1,11 @@
-package csnowstack.load;
+package csnowstack.load.view;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import csnowstack.load.R;
 
 /**
  * Created by cqll on 2016/12/22.
@@ -16,15 +17,6 @@ public class TxtBehavior extends CoordinatorLayout.Behavior{
     private LoadingView mLoadingView;
     private String [] mTxtRes;
     public TxtBehavior(Context context) {
-        init(context);
-    }
-    public TxtBehavior(String normal,String change) {
-        init(normal,change);
-    }
-
-
-    public TxtBehavior(Context context, AttributeSet attrs) {
-        super(context, attrs);
         init(context);
     }
 
