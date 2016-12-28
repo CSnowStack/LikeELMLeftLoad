@@ -81,7 +81,7 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
             }else {
                 mDistance=mDistance-distance;
             }
-            child.setTranslationX(mDistance);
+            mList.setTranslationX(mDistance);
 
         }else {
             consumed[0]=0;//全部分配给列表
@@ -91,9 +91,8 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     @Override
     public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target) {
         super.onStopNestedScroll(coordinatorLayout, child, target);
-
-        if(child.getTranslationX()!=0){
-            reset(child);
+        if(mList.getTranslationX()!=0){
+            reset();
             ((TxtBehavior) ((CoordinatorLayout.LayoutParams) coordinatorLayout.findViewById(R.id.ele_txt).getLayoutParams()).getBehavior()).onStopNestedScroll();
         }
     }
@@ -104,13 +103,12 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
         return true;
     }
 
-    private void reset(final View child) {
-        final float translationX=child.getTranslationX();
+    private void reset() {
 
         mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                child.setTranslationX((1-animation.getAnimatedFraction())*translationX);
+                mList.setTranslationX((1-animation.getAnimatedFraction())*mList.getTranslationX());
             }
         });
 

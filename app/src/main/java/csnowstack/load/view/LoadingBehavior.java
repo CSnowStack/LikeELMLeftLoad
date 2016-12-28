@@ -3,8 +3,6 @@ package csnowstack.load.view;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 
-import csnowstack.load.R;
-
 /**
  * Created by cqll on 2016/12/22.
  */
@@ -35,7 +33,7 @@ public class LoadingBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        return dependency.getId()== R.id.ele_be_dependent;
+        return parent.getChildAt(0)==dependency;
     }
 
     @Override

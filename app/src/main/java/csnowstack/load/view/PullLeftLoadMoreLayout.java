@@ -59,7 +59,7 @@ public class PullLeftLoadMoreLayout extends CoordinatorLayout {
        addView(mTxt,layoutParams);
 
 
-       ((CoordinatorLayout.LayoutParams)getChildAt(0).getLayoutParams()).setBehavior(new RcvBehavior());
+//       ((CoordinatorLayout.LayoutParams)getChildAt(0).getLayoutParams()).setBehavior(new RcvBehavior());
    }
 
 

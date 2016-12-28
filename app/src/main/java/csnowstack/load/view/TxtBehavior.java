@@ -50,7 +50,7 @@ public class TxtBehavior extends CoordinatorLayout.Behavior{
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        return dependency.getId()==R.id.ele_be_dependent;
+        return parent.getChildAt(0)==dependency;
     }
 
     @Override
