@@ -25,7 +25,7 @@ dependencies {
 
 ### 代码使用
 ```java
-<csnowstack.load.view.PullLeftLoadMoreLayout
+<csnowstack.load.behavior.view.PullLeftLoadMoreLayout
     android:id="@+id/pull_load_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -35,7 +35,7 @@ dependencies {
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:overScrollMode="never"/>
-</csnowstack.load.view.PullLeftLoadMoreLayout>
+</csnowstack.load.behavior.view.PullLeftLoadMoreLayout>
 
 
 mRecyclerView= (RecyclerView) findViewById(R.id.rcv);

@@ -36,11 +36,6 @@ public class PullLeftLoadMoreLayout extends CoordinatorLayout {
 
 
    public void addView(int loadingHeight){
-       LayoutParams layoutParamsBeDependent=new LayoutParams(1, 1);
-       layoutParamsBeDependent.setBehavior(new BeDependentBehavior(mContext));
-       mBeDependent =new View(mContext);
-       mBeDependent.setId(R.id.ele_be_dependent);
-       addView(mBeDependent,layoutParamsBeDependent);
 
 
        LayoutParams layoutParamsLoading=new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -59,7 +54,8 @@ public class PullLeftLoadMoreLayout extends CoordinatorLayout {
        addView(mTxt,layoutParams);
 
 
-//       ((CoordinatorLayout.LayoutParams)getChildAt(0).getLayoutParams()).setBehavior(new RcvBehavior());
+       ((CoordinatorLayout.LayoutParams)getChildAt(0).getLayoutParams()).setBehavior(new BeDependentBehavior(mContext));
+
    }
 
 

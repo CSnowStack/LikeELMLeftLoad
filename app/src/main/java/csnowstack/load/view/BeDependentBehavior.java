@@ -16,7 +16,6 @@ import csnowstack.load.R;
  */
 
 public class BeDependentBehavior extends CoordinatorLayout.Behavior {
-    private View mList;
     private int mDistanceMax;
     private ValueAnimator mValueAnimator;
     private float mDistance=0;
@@ -58,7 +57,6 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
         parent.onLayoutChild(child, layoutDirection);
-        mList =  parent.getChildAt(0);
         return true;
     }
 
@@ -72,7 +70,7 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
         //list占满屏幕,向左滑动，但list不能左滑
-        if (mList.getWidth()==coordinatorLayout.getWidth() && dx>0&& !ViewCompat.canScrollHorizontally(mList,ViewCompat.SCROLL_INDICATOR_LEFT) || dx<0&&child.getTranslationX()<0){
+        if (child.getWidth()==coordinatorLayout.getWidth() && dx>0&& !ViewCompat.canScrollHorizontally(child,ViewCompat.SCROLL_INDICATOR_LEFT) || dx<0&&child.getTranslationX()<0){
             consumed[0]=dx;//全部消耗掉
             float distance =dx/2f;
 
@@ -81,7 +79,7 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
             }else {
                 mDistance=mDistance-distance;
             }
-            mList.setTranslationX(mDistance);
+            child.setTranslationX(mDistance);
 
         }else {
             consumed[0]=0;//全部分配给列表
@@ -91,8 +89,8 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
     @Override
     public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target) {
         super.onStopNestedScroll(coordinatorLayout, child, target);
-        if(mList.getTranslationX()!=0){
-            reset();
+        if(child.getTranslationX()!=0){
+            reset(child);
             ((TxtBehavior) ((CoordinatorLayout.LayoutParams) coordinatorLayout.findViewById(R.id.ele_txt).getLayoutParams()).getBehavior()).onStopNestedScroll();
         }
     }
@@ -103,12 +101,12 @@ public class BeDependentBehavior extends CoordinatorLayout.Behavior {
         return true;
     }
 
-    private void reset() {
+    private void reset(final View child) {
 
         mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mList.setTranslationX((1-animation.getAnimatedFraction())*mList.getTranslationX());
+                child.setTranslationX((1-animation.getAnimatedFraction())*mDistance);
             }
         });
 
