@@ -21,7 +21,6 @@ public class LoadingView extends View {
     private Path mPath;
     private int mWidth, mHeight;
     private float mTranslation/*依赖的view偏移的大小*/, mLineXLeft, mFraction = 0;//进行的比例
-    private OnNoticeGoListener mListener;
 
     public LoadingView(Context context) {
         this(context,null);
@@ -48,9 +47,6 @@ public class LoadingView extends View {
         mLineXLeft = mWidth;
     }
 
-    public void setListener(OnNoticeGoListener listener) {
-        mListener = listener;
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -84,17 +80,10 @@ public class LoadingView extends View {
         invalidate();
     }
 
-    public void go() {
-        if(mListener!=null)
-            mListener.go();
-    }
 
     public void setColor(@ColorInt int color) {
         mPaint.setColor(color);
     }
 
 
-    public static interface  OnNoticeGoListener{
-        void  go();
-    }
 }

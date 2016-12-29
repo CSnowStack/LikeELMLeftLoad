@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import csnowstack.load.view.LoadingView;
 import csnowstack.load.view.PullLeftLoadMoreLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         mPullLeftLoadMoreLayout= (PullLeftLoadMoreLayout) findViewById(R.id.pull_load_layout);
         mPullLeftLoadMoreLayout.addView(getResources().getDimensionPixelOffset(R.dimen.item_img));
         mPullLeftLoadMoreLayout.setFillLoadingColor(ContextCompat.getColor(this,R.color.colorAccent));
-        mPullLeftLoadMoreLayout.setOnGoListener(new LoadingView.OnNoticeGoListener() {
+        mPullLeftLoadMoreLayout.setOnGoListener(new PullLeftLoadMoreLayout.OnNoticeGoListener() {
             @Override
             public void go() {
                 Toast.makeText(MainActivity.this,"跳转页面",Toast.LENGTH_SHORT).show();
